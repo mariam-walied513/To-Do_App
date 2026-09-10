@@ -128,4 +128,54 @@ class MyApp extends StatelessWidget {
         ),
       );
   }
-}  
+// }  
+// void main() {
+//   runApp(const MyApp());
+//   }
+//   class MyApp extends StatelessWidget {
+//     const MyApp({super.key});
+//     @override
+//     Widget build(BuildContext context){
+//       return MaterialApp(
+//         debugShowCheckedModeBanner:false ,
+//         home: Scaffold(
+//           backgroundColor: Colors.white,
+//           body:  Padding(padding: const EdgeInsets.all(20.0),
+//           child: Column(
+//             crossAxisAlignment: CrossAxisAlignment.start,
+//             children:[
+//               Row(
+//                 children:[
+//                   const Text('Task'),
+//                   const SizedBox(width: 12),
+//                   Container(
+//                     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+//                     decoration: BoxDecoration(
+//                       color: const Color.fromARGB(255, 157, 220, 159),
+//                       borderRadius: BorderRadius.circular(10),
+//                     ),
+//                     child: const Text('5',
+//                     style: TextStyle(
+//                         color: Color.fromARGB(255, 0, 0, 0),
+//                         fontWeight: FontWeight.bold,
+//                         fontSize: 13,
+
+//                     ),
+//                     ),
+//                   ),
+                    
+//                 ],
+                
+//                 ),
+                
+//             ],
+
+//             ),
+//          ),
+//         ),
+
+//         );
+//     }
+//   }
+
+}
