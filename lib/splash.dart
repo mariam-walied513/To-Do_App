@@ -6,30 +6,30 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context){
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SvgPicture.asset('assets/images/Group.svg',
-            width: 334.sp,
-            height: 343.94.sp),
-            SizedBox(height: 20.sp),
-            Text(
-              'ToDo',
-              style: TextStyle(
-                fontSize: 36.sp,
-                fontWeight: FontWeight.bold,
-                color: Color(0xff149954)
-                
-                
-              )
-            )
-              
-          ]
-
-        ) ,
-
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 20),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SvgPicture.asset(
+                'assets/images/Group.svg',
+                width: 334.sp,
+                height: 343.94.sp,
+              ),
+              SizedBox(height: 20.sp),
+              Text(
+                'ToDo',
+                style: TextStyle(
+                  fontSize: 36.sp,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xff149954),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

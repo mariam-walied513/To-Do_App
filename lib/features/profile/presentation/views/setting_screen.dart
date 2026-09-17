@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class LanguageScreen extends StatefulWidget {
-  const LanguageScreen({super.key});
+class SettingScreen extends StatefulWidget {
+  const SettingScreen({super.key});
 
   @override
-  State<LanguageScreen> createState() => _LanguageScreenState();
+  State<SettingScreen> createState() => _SettingScreen();
 }
 
-class _LanguageScreenState extends State<LanguageScreen> {
+class _SettingScreen extends State<SettingScreen> {
 
   String selectedLanguage = 'EN';
 

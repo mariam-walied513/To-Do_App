@@ -37,11 +37,15 @@ class AddTask3 extends StatelessWidget{
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child:
             Image.asset('assets/images/GettyImages-1315607788 3.png',
              width:261.w,
              height:207.h,
              fit: 
-             BoxFit.contain,
+             BoxFit.cover,
+            ),
             ),
              SizedBox(height: 20.h),
              Padding(

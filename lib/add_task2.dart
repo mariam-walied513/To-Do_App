@@ -56,12 +56,15 @@ class _AddTask2State extends State<AddTask2> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Image.asset('assets/images/GettyImages-1315607788 3.png',
+                      ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                       child: Image.asset('assets/images/GettyImages-1315607788 3.png',
                       width:261,
                       height:207,
                       fit:
                       BoxFit.contain,
                     ),
+                      ),
                     SizedBox(height: 20),
                     Padding(
                         padding:

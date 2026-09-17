@@ -11,6 +11,7 @@ class Login extends StatelessWidget{
       body: 
        Column(
         children: [
+          Switch(value: true, onChanged: (bool newValue){}),
           Image.asset('assets/images/GettyImages-1315607788 3.png',
           width: 375.w,
           height: 293.h,
