@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -134,6 +135,9 @@ import 'package:flutter_svg/svg.dart';
   // }
 
 import 'package:flutter/material.dart';
+=======
+import 'screens/article_screen.dart';
+>>>>>>> e71c69096e6699d45a2fb3eae096738262d9d79b
 
 void main() {
   runApp(const MyApp());
@@ -144,6 +148,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+<<<<<<< HEAD
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: TextFormFieldsScreen(),
@@ -256,6 +261,17 @@ class TextFormFieldsScreen extends StatelessWidget {
           ),
         ),
       ),
+=======
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Bookmark',
+      theme: ThemeData(
+        scaffoldBackgroundColor: Colors.white,
+        fontFamily: 'Arial',
+      ),
+     
+      home: const ArticleScreen(articleId: 0),
+>>>>>>> e71c69096e6699d45a2fb3eae096738262d9d79b
     );
   }
 }

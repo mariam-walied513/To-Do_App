@@ -10,11 +10,14 @@ include(${EPHEMERAL_DIR}/generated_config.cmake)
 # https://github.com/flutter/flutter/issues/57146.
 set(WRAPPER_ROOT "${EPHEMERAL_DIR}/cpp_client_wrapper")
 
+<<<<<<< HEAD
 # Set fallback configurations for older versions of the flutter tool.
 if (NOT DEFINED FLUTTER_TARGET_PLATFORM)
   set(FLUTTER_TARGET_PLATFORM "windows-x64")
 endif()
 
+=======
+>>>>>>> e71c69096e6699d45a2fb3eae096738262d9d79b
 # === Flutter Library ===
 set(FLUTTER_LIBRARY "${EPHEMERAL_DIR}/flutter_windows.dll")
 
@@ -97,7 +100,11 @@ add_custom_command(
   COMMAND ${CMAKE_COMMAND} -E env
     ${FLUTTER_TOOL_ENVIRONMENT}
     "${FLUTTER_ROOT}/packages/flutter_tools/bin/tool_backend.bat"
+<<<<<<< HEAD
       ${FLUTTER_TARGET_PLATFORM} $<CONFIG>
+=======
+      windows-x64 $<CONFIG>
+>>>>>>> e71c69096e6699d45a2fb3eae096738262d9d79b
   VERBATIM
 )
 add_custom_target(flutter_assemble DEPENDS

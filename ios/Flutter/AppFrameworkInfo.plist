@@ -21,6 +21,10 @@
   <key>CFBundleVersion</key>
   <string>1.0</string>
   <key>MinimumOSVersion</key>
+<<<<<<< HEAD
   <string>12.0</string>
+=======
+  <string>11.0</string>
+>>>>>>> e71c69096e6699d45a2fb3eae096738262d9d79b
 </dict>
 </plist>

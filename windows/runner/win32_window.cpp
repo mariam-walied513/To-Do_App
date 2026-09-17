@@ -60,7 +60,11 @@ class WindowClassRegistrar {
  public:
   ~WindowClassRegistrar() = default;
 
+<<<<<<< HEAD
   // Returns the singleton registrar instance.
+=======
+  // Returns the singleton registar instance.
+>>>>>>> e71c69096e6699d45a2fb3eae096738262d9d79b
   static WindowClassRegistrar* GetInstance() {
     if (!instance_) {
       instance_ = new WindowClassRegistrar();

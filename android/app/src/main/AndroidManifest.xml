@@ -1,13 +1,23 @@
+<<<<<<< HEAD
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
         android:label="flutter_application_1"
+=======
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.news">
+   <application
+        android:label="news"
+>>>>>>> e71c69096e6699d45a2fb3eae096738262d9d79b
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:launchMode="singleTop"
+<<<<<<< HEAD
             android:taskAffinity=""
+=======
+>>>>>>> e71c69096e6699d45a2fb3eae096738262d9d79b
             android:theme="@style/LaunchTheme"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
             android:hardwareAccelerated="true"
@@ -31,6 +41,7 @@
             android:name="flutterEmbedding"
             android:value="2" />
     </application>
+<<<<<<< HEAD
     <!-- Required to query activities that can process text, see:
          https://developer.android.com/training/package-visibility and
          https://developer.android.com/reference/android/content/Intent#ACTION_PROCESS_TEXT.
@@ -42,4 +53,6 @@
             <data android:mimeType="text/plain"/>
         </intent>
     </queries>
+=======
+>>>>>>> e71c69096e6699d45a2fb3eae096738262d9d79b
 </manifest>

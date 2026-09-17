@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 # flutter_application_1
+=======
+# news
+>>>>>>> e71c69096e6699d45a2fb3eae096738262d9d79b
 
 A new Flutter project.
 

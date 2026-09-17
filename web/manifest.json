@@ -1,6 +1,11 @@
 {
+<<<<<<< HEAD
     "name": "flutter_application_1",
     "short_name": "flutter_application_1",
+=======
+    "name": "news",
+    "short_name": "news",
+>>>>>>> e71c69096e6699d45a2fb3eae096738262d9d79b
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
