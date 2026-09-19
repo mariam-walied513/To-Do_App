@@ -60,9 +60,10 @@ class AuthRepo {
         await UserService.saveAccessToken(accessToken);
         await UserService.saveRefreshToken(refreshToken);
         await UserService.saveUsername(user.username ?? '');
-        await UserService.saveUserId(
-          user.id is int ? user.id as int : int.tryParse('${user.id}') ?? 0,
-        );
+        final userId = int.tryParse(user.id ?? '');
+        if (userId != null) {
+          await UserService.saveUserId(userId);
+        }
         await UserService.setLoggedIn(true);
 
         return {

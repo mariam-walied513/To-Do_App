@@ -8,7 +8,7 @@ import 'package:flutter_application_1/core/helper/my_navigator.dart';
 import 'package:flutter_application_1/core/components/custom_svg.dart';
 import 'package:flutter_application_1/core/components/custom_button.dart';
 import 'package:flutter_application_1/core/components/custom_text_field.dart';
-import 'package:flutter_application_1/features/home/presentation/views/home_screen.dart';
+import 'package:flutter_application_1/features/home/presentation/views/home_screen1.dart';
 
 class LoginScreen extends StatefulWidget{
   const LoginScreen({super.key});
@@ -56,7 +56,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
       MyNavigator.goTo(
         context,
-        topage: const HomeScreen(),
+        topage: HomeScreen1(username: username),
         type: NavigatorType.pushAndRemoveUntil,
       );
     } catch (error) {

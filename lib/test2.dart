@@ -20,7 +20,7 @@ import 'package:flutter_application_1/edit_task.dart';
 import 'package:flutter_application_1/edit_task2.dart';
 import 'package:flutter_application_1/sec.dart';
 import 'package:flutter_application_1/features/tasks/add_task_screen.dart' as add_task_screen;
-import 'package:flutter_application_1/features/home/presentation/views/home_screen.dart' as home_screen;
+import 'package:flutter_application_1/features/home/presentation/views/home_screen1.dart' as home_screen;
 import 'package:flutter_application_1/features/profile/presentation/views/profile_screen.dart' as profile_screen;
 import 'package:flutter_application_1/features/auth/presentation/views/splash_screen.dart' as splash_screen;
 

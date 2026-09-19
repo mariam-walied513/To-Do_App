@@ -18,7 +18,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     Future.delayed(Duration(seconds: 3)).then((v){
-       MyNavigator.goTo(context,topage: LetsStart());
+      MyNavigator.goTo(context,topage: const LetsStartScreen());
     });
   }
   @override
