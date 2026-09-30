@@ -7,5 +7,11 @@ abstract class EndPoints{
    static const String getUserData = 'get_user_data';
    static const String changePassword = 'change_password';
    static const String updateProfile = 'update_profile';
+  static const String getTasks = '/tasks';
+  static const String addTask = '/tasks';
+  static const String updateTask = '/tasks';
+  static const String deleteTask = '/tasks';
+
+
 
 }

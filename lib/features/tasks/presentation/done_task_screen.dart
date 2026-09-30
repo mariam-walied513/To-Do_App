@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/core/utils/app_assets.dart';
 import 'package:flutter_application_1/features/auth/data/models/task_model.dart';
 
 class DoneTaskScreen extends StatelessWidget {
-  final TaskData task;
+  final TaskModel task;
 
   const DoneTaskScreen({
     super.key,
@@ -104,7 +105,7 @@ class DoneTaskScreen extends StatelessWidget {
                       ),
                       child: ClipOval(
                         child: Image.asset(
-                          'lib/assets/images/GettyImages-1315607788 3.png',
+                          AppImages.flag,
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -149,7 +150,7 @@ class DoneTaskScreen extends StatelessWidget {
                       const SizedBox(width: 18),
                       Expanded(
                         child: Text(
-                          task.group,
+                          _getTaskGroup(),
                           style: const TextStyle(
                             fontSize: 14,
                             color: Color(0xFF353A3D),
@@ -186,7 +187,10 @@ class DoneTaskScreen extends StatelessWidget {
                 Container(
                   width: double.infinity,
                   height: 150,
-                  padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 13),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 13,
+                    vertical: 13,
+                  ),
                   alignment: Alignment.topLeft,
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -219,7 +223,7 @@ class DoneTaskScreen extends StatelessWidget {
                       ),
                       const SizedBox(width: 18),
                       Text(
-                        task.date,
+                        _getTaskDate(),
                         style: const TextStyle(
                           fontSize: 14,
                           color: Color(0xFF353A3D),
@@ -227,7 +231,7 @@ class DoneTaskScreen extends StatelessWidget {
                       ),
                       const SizedBox(width: 18),
                       Text(
-                        task.time,
+                        _getTaskTime(),
                         style: const TextStyle(
                           fontSize: 14,
                           color: Color(0xFF353A3D),
@@ -245,8 +249,34 @@ class DoneTaskScreen extends StatelessWidget {
     );
   }
 
+  String _getTaskGroup() {
+    try {
+      return (task as dynamic).group ?? 'Work';
+    } catch (_) {
+      return 'Work';
+    }
+  }
+
+  String _getTaskDate() {
+    try {
+      return (task as dynamic).date ?? '2026-09-29';
+    } catch (_) {
+      return '2026-09-29';
+    }
+  }
+
+  String _getTaskTime() {
+    try {
+      return (task as dynamic).time ?? '10:00 AM';
+    } catch (_) {
+      return '10:00 AM';
+    }
+  }
+
   Widget _buildGroupIcon() {
-    if (task.group == 'Personal') {
+    final group = _getTaskGroup();
+
+    if (group == 'Personal') {
       return Container(
         width: 34,
         height: 34,
@@ -262,7 +292,7 @@ class DoneTaskScreen extends StatelessWidget {
       );
     }
 
-    if (task.group == 'Work') {
+    if (group == 'Work') {
       return Container(
         width: 34,
         height: 34,

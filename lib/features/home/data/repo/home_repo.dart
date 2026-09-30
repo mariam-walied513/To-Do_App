@@ -10,7 +10,7 @@ class HomeRepo {
   Future<Either<String, List>> getTasks() async {
     try {
       var response = await apiHelper.getRequest(
-          endPoint: 'tasks',
+          endPoint: 'get_user_data',
         isPrivate: true
       );
       var jsonResponse = response.data as Map<String, dynamic>;

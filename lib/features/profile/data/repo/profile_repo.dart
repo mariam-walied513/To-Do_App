@@ -36,20 +36,25 @@ class Profilerepo{
       return left(apiHelper.handleException(e));
     }
   }
-   Future<Either<String, List>> changePassword({required String accessToken}) async{
-    try{
-      var response = await apiHelper.postRequest(
+Future<Either<String, String>> changePassword({
+  required String oldPassword,
+  required String newPassword,
+}) async {
+  try {
+    var response = await apiHelper.postRequest(
+      endPoint: EndPoints.changePassword,
+      data: {
+        'old_password': oldPassword,
+        'new_password': newPassword,
+      },
+    );
 
-        endPoint: EndPoints.changePassword,
-        isPrivate: true,
-        data: {'access_token':accessToken},
-         );
-         var jsonResponse = response.data as Map<String, dynamic>;
-         return right(jsonResponse['change_password']);
-    }
-    catch(e){
-      return left(apiHelper.handleException(e));
-    }
-   }
+    var jsonResponse = response.data as Map<String, dynamic>;
+    return right(jsonResponse['message'] ?? 'Password changed successfully');
+  } catch (e) {
+    return left(apiHelper.handleException(e));
+  }
+
+}
 }
 

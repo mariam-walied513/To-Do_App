@@ -1,38 +1,60 @@
-class TaskData {
-  int? id; // ✅ جديد: الـ ID من الـ API
-  String title;
-  String description;
-  String date;
-  String time;
-  String group;
-  String status;
-  String? imagePath;
+class TaskModel {
+  final String? id;
+  final String title;
+  final String description;
+  final String? imagePath;
+  final bool isCompleted;
 
-  TaskData({
-    this.id, // ✅ اختياري
+  const TaskModel({
+    this.id,
     required this.title,
     required this.description,
-    this.date = '',
-    this.time = '',
-    this.group = 'Home',
-    this.status = 'In Progress',
     this.imagePath,
+    this.isCompleted = false,
   });
 
-  // ✅ من JSON (لما بنجيب من الـ API)
-  factory TaskData.fromJson(Map<String, dynamic> json) {
-    return TaskData(
-      id: json['id'],
-      title: json['title'] ?? '',
-      description: json['description'] ?? '',
+  factory TaskModel.fromJson(Map<String, dynamic> json) {
+    return TaskModel(
+      id: json['id']?.toString() ?? json['_id']?.toString(),
+      title: json['title']?.toString() ?? '',
+      description: json['description']?.toString() ?? '',
+      imagePath: json['image']?.toString() ?? json['image_path']?.toString(),
+      isCompleted: _parseBool(json['is_completed']) ??
+          (json['status'] == 'completed') ??
+          false,
     );
   }
 
-  // ✅ إلى JSON (لما بنبعت للـ API)
   Map<String, dynamic> toJson() {
     return {
+      if (id != null) 'id': id,
       'title': title,
       'description': description,
+      if (imagePath != null) 'image': imagePath,
+      'is_completed': isCompleted,
     };
+  }
+
+  static bool? _parseBool(dynamic value) {
+    if (value is bool) return value;
+    if (value is int) return value == 1;
+    if (value is String) return value.toLowerCase() == 'true' || value == '1';
+    return null;
+  }
+
+  TaskModel copyWith({
+    String? id,
+    String? title,
+    String? description,
+    String? imagePath,
+    bool? isCompleted,
+  }) {
+    return TaskModel(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      imagePath: imagePath ?? this.imagePath,
+      isCompleted: isCompleted ?? this.isCompleted,
+    );
   }
 }

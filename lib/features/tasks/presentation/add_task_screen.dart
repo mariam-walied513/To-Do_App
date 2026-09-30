@@ -122,19 +122,19 @@ class _AddTaskState extends State<AddTask> {
                   CustomTextField(
                     controller: titleController,
                     hint: 'Title',
-                    prefixIconpath: 'assets/images/Profile - Iconly Pro.svg',
+                    prefixIconpath: AppSvgs.profile,
                   ),
                   SizedBox(height: 20.h),
                   CustomTextField(
                     controller: descriptionController,
                     hint: 'Description',
-                    prefixIconpath: 'assets/images/Profile - Iconly Pro.svg',
+                    prefixIconpath: AppSvgs.profile,
                   ),
                   SizedBox(height: 20.h),
                   CustomTextField(
                     controller: groupController,
                     hint: 'Group',
-                    prefixIconpath: 'assets/images/Profile - Iconly Pro.svg',
+                    prefixIconpath: AppSvgs.profile,
                     suffixIconpath: 'assets/images/Vector.svg',
                   ),
                   SizedBox(height: 20.h),

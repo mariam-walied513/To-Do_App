@@ -1,110 +1,80 @@
+import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_application_1/core/network/api_helper.dart';
+import 'package:flutter_application_1/core/network/end_points.dart';
 import 'package:flutter_application_1/features/auth/data/models/user_model.dart';
-import 'package:flutter_application_1/serveces/api_service.dart';
-import 'package:flutter_application_1/serveces/user_service.dart';
+
+String? accessToken;
+String? refreshToken;
 
 class AuthRepo {
-  Future<Map<String, dynamic>> register({
+  final ApiHelper apiHelper = ApiHelper();
+
+  Future<Either<String, userModel>> login({
     required String username,
     required String password,
   }) async {
     try {
-      final response = await ApiService.dio.post(
-        'register',
-        data: FormData.fromMap({
+      var response = await apiHelper.postRequest(
+        endPoint: EndPoints.login,
+        data: {
           'username': username,
           'password': password,
-        }),
+        },
       );
-      final data = response.data as Map<String, dynamic>;
 
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        if (data['status'] == true) {
-          return {
-            'success': true,
-            'message': data['message'] ?? 'Registered successfully',
-          };
-        }
+      print('Response Data: ${response.data}');
+
+      final dynamic data = response.data;
+      if (data is! Map<String, dynamic>) {
+        return left('Invalid response format from server');
       }
-      return {
-        'success': false,
-        'message': data['message'] ?? 'Registration failed',
-      };
+
+      final jsonResponse = data;
+
+      accessToken = jsonResponse['access_token']?.toString();
+      refreshToken = jsonResponse['refresh_token']?.toString();
+
+      if (jsonResponse['user'] != null && jsonResponse['user'] is Map<String, dynamic>) {
+        final user = userModel.fromJson(jsonResponse['user']);
+        return right(user);
+      } else {
+        return left('User data not found in response');
+      }
+
     } catch (e) {
-      return {
-        'success': false,
-        'message': _handleError(e),
-      };
+      return left(apiHelper.handleException(e));
     }
   }
 
-  Future<Map<String, dynamic>> login({
+  Future<Either<String, String>> register({
     required String username,
     required String password,
+    String? imagePath,
   }) async {
     try {
-      final response = await ApiService.dio.post(
-        'login',
-        data: FormData.fromMap({
+      var response = await apiHelper.postRequest(
+        endPoint: EndPoints.register,
+        data: {
           'username': username,
           'password': password,
-        }),
+          if (imagePath != null)
+            'image': await MultipartFile.fromFile(
+              imagePath,
+              filename: imagePath.split('/').last,
+            ),
+        },
       );
-      final data = response.data as Map<String, dynamic>;
 
-      if (response.statusCode == 200 && data['status'] == true) {
-        final accessToken = data['access_token'];
-        final refreshToken = data['refresh_token'];
-        final user = userModel.fromJson(data['user']);
-
-        await UserService.saveAccessToken(accessToken);
-        await UserService.saveRefreshToken(refreshToken);
-        await UserService.saveUsername(user.username ?? '');
-        await UserService.saveUserId(
-          user.id is int ? user.id as int : int.tryParse('${user.id}') ?? 0,
-        );
-        await UserService.setLoggedIn(true);
-
-        return {
-          'success': true,
-          'user': user,
-        };
+      final dynamic data = response.data;
+      if (data is Map<String, dynamic>) {
+        return right(data['message']?.toString() ?? 'Registration Successful');
       }
 
-      return {
-        'success': false,
-        'message': data['message'] ?? 'Login failed',
-      };
+      return right('Registration Successful');
+
     } catch (e) {
-      return {
-        'success': false,
-        'message': _handleError(e),
-      };
-    }
-  }
-
-  Future<void> logout() async {
-    await UserService.logout();
-  }
-
-  // ✅ مبسطة جداً
-  String _handleError(dynamic e) {
-    try {
-      if (e is DioError) {
-        if (e.response?.data != null) {
-          final data = e.response?.data;
-          if (data is Map && data['message'] != null) {
-            return data['message'];
-          }
-          if (data is Map && data['error'] != null) {
-            return data['error'];
-          }
-        }
-        return e.message ?? 'Something went wrong';
-      }
-      return e.toString();
-    } catch (_) {
-      return 'Something went wrong';
+      return left(apiHelper.handleException(e));
     }
   }
 }

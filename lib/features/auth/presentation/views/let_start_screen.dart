@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/core/utils/app_assets.dart';
+import 'package:flutter_application_1/core/utils/app_colors.dart';
+import 'package:flutter_application_1/features/auth/presentation/register_screen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class LetsStartScreen extends StatelessWidget {
@@ -11,7 +14,7 @@ class LetsStartScreen extends StatelessWidget {
     final double imageHeight = size.height * 0.38;
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF7F8F8),
+      backgroundColor:AppColors.background,
       body: SafeArea(
         child: SingleChildScrollView(
           child: ConstrainedBox(
@@ -29,7 +32,7 @@ class LetsStartScreen extends StatelessWidget {
                     height: imageHeight,
                     width: double.infinity,
                     child: SvgPicture.asset(
-                      'lib/assets/images/OBJECTS012.svg',
+                      AppSvgs.onBoarding,
                       fit: BoxFit.contain,
                     ),
                   ),
@@ -68,18 +71,23 @@ class LetsStartScreen extends StatelessWidget {
                     width: double.infinity,
                     height: 53,
                     child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/register');
-                      },
+                     onPressed: () {
+                       Navigator.push(
+                             context,
+                          MaterialPageRoute(builder: (context) => const Register()), 
+                    );
+                 },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF119B52),
                         foregroundColor: Colors.white,
-                        elevation: 6,
-                        shadowColor: const Color(0x66119B52),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(13),
-                        ),
-                      ),
+                             elevation: 6,
+                          shadowColor: const Color(0x66119B52),
+                                    shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(13),
+    ),
+  ),
+
+
                       child: const Text(
                         "Let's Start",
                         style: TextStyle(

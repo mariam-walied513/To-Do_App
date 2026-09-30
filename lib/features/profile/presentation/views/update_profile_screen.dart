@@ -87,7 +87,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
         child: Column(
           children: [
             Image.asset(
-              'assets/images/GettyImages-1315607788 3.png',
+              AppImages.flag,
               width: 375.w,
               height: 293.h,
               fit: BoxFit.cover,

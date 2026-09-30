@@ -1,181 +1,172 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/core/components/custom_button.dart';
 import 'package:flutter_application_1/core/components/custom_text_field.dart';
+import 'package:flutter_application_1/core/helper/my_navigator.dart';
 import 'package:flutter_application_1/core/utils/app_assets.dart';
-import 'package:flutter_application_1/core/utils/app_colors.dart';
-import 'package:flutter_application_1/core/utils/app_paddings.dart';
+import 'package:flutter_application_1/features/auth/data/models/user_model.dart';
 import 'package:flutter_application_1/features/profile/data/repo/profile_repo.dart';
+import 'package:flutter_application_1/features/profile/presentation/views/change_password_screen.dart';
+import 'package:flutter_application_1/features/profile/presentation/views/setting_screen.dart';
+import 'package:flutter_application_1/features/profile/presentation/views/update_profile_screen.dart';
+
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import 'update_profile_screen.dart';
-import 'change_password_screen.dart';
-import 'setting_screen.dart';
 
-class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key});
+class Profile extends StatefulWidget {
+  const Profile({super.key});
 
   @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
+  State<Profile> createState() => _ProfileState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
-  bool isLoading = false;
-  String? errorMsg;
-  Map<String, dynamic>? userData;
+class _ProfileState extends State<Profile> {
+  final Profilerepo _profileRepo = Profilerepo();
+  final TextEditingController _profileController = TextEditingController();
+
+  userModel? _userModel;
+  bool _isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    getProfileData();
+    _fetchProfileData();
   }
 
-  getProfileData() async {
+  @override
+  void dispose() {
+    _profileController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _fetchProfileData() async {
     setState(() {
-      errorMsg = null;
-      isLoading = true;
-      userData = null;
+      _isLoading = true;
     });
 
-    Profilerepo profilerepo = Profilerepo();
-    var result = await profilerepo.getUser();
-    
-    result.fold(
-      (String e) {
-        setState(() {
-          errorMsg = e;
-          isLoading = false;
-        });
-      },
-      (data) {
-        setState(() {
-          userData = userData; 
-          isLoading = false;
-        });
-      },
-    );
+    final result = await _profileRepo.getUser();
+
+    if (mounted) {
+      result.fold(
+        (error) {
+          setState(() {
+            _isLoading = false;
+          });
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(error),
+              backgroundColor: Colors.red,
+            ),
+          );
+        },
+        (user) {
+          setState(() {
+            _userModel = userModel.fromJson(
+              Map<String, dynamic>.from(user.first as Map),
+            );
+            _isLoading = false;
+          });
+        },
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController profileController = TextEditingController();
-    final TextEditingController changePasswordController = TextEditingController();
-    final TextEditingController settingsController = TextEditingController();
-
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: const Color(0xffF3F5F4),
       appBar: AppBar(
-        backgroundColor: AppColors.background,
+        backgroundColor: const Color(0xffF3F5F4),
+        elevation: 0,
         leading: Padding(
-          padding: const EdgeInsets.all(8),
+          padding: const EdgeInsets.all(8.0),
           child: CircleAvatar(
-            backgroundImage: AssetImage(AppImages.flag),
             radius: 60.0,
+            backgroundImage: _userModel?.imagePath != null
+                ? NetworkImage(_userModel!.imagePath!)
+                : const AssetImage('assets/images/flag.png')
+                    as ImageProvider,
           ),
         ),
         title: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               "Hello!",
               style: TextStyle(
-                fontSize: 12.sp,
+                fontSize: 12,
                 fontWeight: FontWeight.w300,
-                color: AppColors.black,
+                color: Color(0xff24252C),
               ),
             ),
             Text(
-              userData?['username'] ?? 'User',
-              style: TextStyle(
-                fontSize: 16.sp,
+              _isLoading
+                  ? "Loading..."
+                  : (_userModel?.username ?? "Ahmed Saber"),
+              style: const TextStyle(
+                fontSize: 16,
                 fontWeight: FontWeight.w300,
-                color: AppColors.black,
+                color: Color(0xff24252C),
               ),
             ),
           ],
         ),
       ),
-      body: isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : errorMsg != null
-              ? Center(child: Text(errorMsg!))
-              : Column(
-                  children: [
-                    SizedBox(height: 20.h),
+      body: _isLoading
+          ? const Center(
+              child: CircularProgressIndicator(
+                color: Color(0xff149954),
+              ),
+            )
+          : Column(
+              children: [
+                SizedBox(height: 20.h),
 
-                    // 1. خيار Profile
-                    Padding(
-                      padding: AppPaddings.defaultPadding,
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const UpdateProfile(),
-                            ),
-                          );
-                        },
-                        
-                          child: CustomTextField(
-                            hint: "Profile",
-                            prefixIconpath: AppSvgs.profile,
-                            controller: profileController,
-                            suffixIconpath: AppSvgs.arrow_down,
-                          ),
-                        
-                      ),
-                    ),
-                    SizedBox(height: 20.h),
-
-                    
-                    Padding(
-                      padding: AppPaddings.defaultPadding,
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const ChangePasswordScreen(),
-                            ),
-                          );
-                        },
-                        child: AbsorbPointer(
-                          child: CustomTextField(
-                            hint: "Change Password",
-                            prefixIconpath: AppSvgs.lockClosed,
-                            controller: changePasswordController,
-                            suffixIconpath: AppSvgs.arrow_down,
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 20.h),
-
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: CustomTextField(
                    
-                    Padding(
-                      padding: AppPaddings.defaultPadding,
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const SettingScreen(),
-                            ),
-                          );
-                        },
-                        child: AbsorbPointer(
-                          child: CustomTextField(
-                            hint: "Settings",
-                            prefixIconpath: AppSvgs.setting,
-                            controller: settingsController,
-                            suffixIconpath: AppSvgs.arrow_down,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
+                    hint: 'Profile',
+                    prefixIconpath: AppSvgs.profile,
+                    suffixIconpath: AppSvgs.arrow_down,
+                    onSuffixPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (_) => const UpdateProfile()));
+                    },
+                    controller: _profileController,
+
+                  ),
                 ),
+
+                SizedBox(height: 20.h),
+
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: CustomTextField(hint: 'change password', 
+                  controller: _profileController,
+                  prefixIconpath: AppSvgs.lockClosed,
+                  suffixIconpath: AppSvgs.arrow_down,
+                  onSuffixPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (_) => const ChangePassword()));
+                  }
+                  )
+                ),
+
+                SizedBox(height: 20.h),
+
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: CustomTextField(
+                    hint: 'Settings', 
+                    controller: _profileController,
+                    prefixIconpath: AppSvgs.setting,
+                    suffixIconpath: AppSvgs.arrow_down,
+                    onSuffixPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (_) => const SettingScreen()));
+                    }
+                    )
+                )
+              ],
+            ),
     );
   }
 }
